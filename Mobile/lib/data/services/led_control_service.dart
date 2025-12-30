@@ -66,9 +66,17 @@ class LEDControlService {
     await _dio.post('$_baseUrl/api/led/power', data: {'on': on});
   }
 
-  /// Set global brightness (0-255)
-  Future<void> setBrightness(int value) async {
-    await _dio.post('$_baseUrl/api/led/brightness', data: {'value': value});
+  /// Set global brightness (0-255), optionally saving to NVS
+  Future<void> setBrightness(int value, {bool save = false}) async {
+    await _dio.post(
+      '$_baseUrl/api/led/brightness',
+      data: {'value': value, 'save': save},
+    );
+  }
+
+  /// Set brightness and save to NVS (for when user finishes adjusting)
+  Future<void> setBrightnessFinal(int value) async {
+    await setBrightness(value, save: true);
   }
 
   /// Set brightness with throttle for slider (smooth live updates)

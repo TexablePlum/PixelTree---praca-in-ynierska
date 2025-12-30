@@ -254,8 +254,11 @@ private:
         uint8_t brightness = jsonObj["value"].as<uint8_t>();
         LEDController::setBrightness(brightness);
         
-        // Save to NVS for persistence
-        NVSManager::saveBrightness(brightness);
+        // Save to NVS only when explicitly requested (when user finishes adjusting)
+        bool shouldSave = jsonObj["save"] | false;
+        if (shouldSave) {
+            NVSManager::saveBrightness(brightness);
+        }
         
         StaticJsonDocument<128> doc;
         doc["status"] = "ok";

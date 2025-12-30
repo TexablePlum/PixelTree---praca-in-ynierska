@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
@@ -9,6 +10,11 @@ import 'presentation/screens/my_devices/my_devices_screen.dart';
 import 'presentation/screens/connection_mode/connection_mode_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const PixelTreeApp());
 }
 

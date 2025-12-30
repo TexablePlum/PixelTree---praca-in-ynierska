@@ -144,6 +144,14 @@ class _DeviceConnectedScreenState extends State<DeviceConnectedScreen>
     }
   }
 
+  void _onBrightnessChangeEnd(double value) {
+    try {
+      _ledService.setBrightnessFinal(value.round());
+    } catch (e) {
+      _handleDisconnection();
+    }
+  }
+
   void _onEffectSelected(Effect effect) async {
     setState(() => _selectedEffectId = effect.id);
     try {
@@ -319,6 +327,7 @@ class _DeviceConnectedScreenState extends State<DeviceConnectedScreen>
                     min: 0,
                     max: 255,
                     onChanged: _powerOn ? _onBrightnessChanged : null,
+                    onChangeEnd: _powerOn ? _onBrightnessChangeEnd : null,
                   ),
                 ),
               ),
